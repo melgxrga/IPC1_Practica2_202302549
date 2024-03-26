@@ -1,0 +1,23 @@
+.root {
+    -fx-font-family: "Montserrat";
+    -fx-background-image: url('../images/fondo.png');
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+}
+.button {
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #0000e6;
+    -fx-padding: 10;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+}
+.label {
+    -fx-font-size: 20px;
+    -fx-font-family: "Monsterrat";
+    -fx-text-fill: #000000;
+}
+.VBox {
+    -fx-padding: 30 0 0 30; 
+}

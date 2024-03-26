@@ -1,0 +1,9 @@
+.root {
+    -fx-background-image: url('../images/fondo.png');
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+}
+.label {
+    -fx-font-size: 12px; /* Ajusta este valor según tus necesidades */
+    -fx-font-weight: bold;
+}	

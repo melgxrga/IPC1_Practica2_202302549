@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.ComboBox?>
+
+<VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.melgar.GenerarViajeController" stylesheets="@styles/vistaCargaRutas.css">
+    <children>
+        <AnchorPane>
+            <children>
+                <Button text="Regresar al Menú" layoutX="135" layoutY="10" onAction="#regresarMenu" />
+                <Label text="Seleccionar punto inicial" layoutX="135" layoutY="50" />
+                <ComboBox fx:id="puntoInicialComboBox" layoutX="135" layoutY="80" prefWidth="200" />
+                <Label text="Seleccionar punto final" layoutX="135" layoutY="120" />
+                <ComboBox fx:id="puntoFinalComboBox" layoutX="135" layoutY="150" prefWidth="200" />
+                <Label text="Seleccionar tipo de transporte" layoutX="135" layoutY="190" />
+                <ComboBox fx:id="tipoTransporteComboBox" layoutX="135" layoutY="220" prefWidth="200" />
+            </children>
+        </AnchorPane>
+        <VBox prefHeight="50"/>
+        <HBox alignment="CENTER">
+            <Button text="Generar Viaje" prefWidth="200" onAction="#handleAgregarViaje"/>
+        </HBox>
+    </children>
+</VBox>

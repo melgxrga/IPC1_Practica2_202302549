@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.Region?>
+
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="com.melgar.IniciarViajesController">
+    <children>
+        <HBox>
+            <children>
+                <Button fx:id="iniciarTodosLosViajes" onAction="#iniciarTodosLosViajes" text="Iniciar todos los viajes" />
+                <Button text="Ver viajes iniciados" onAction="#verViajesIniciados" />
+                <Region HBox.hgrow="ALWAYS" /> <!-- Nodo de relleno invisible -->
+                <Button text="Salir al menú" onAction ="#regresarMenu" />
+            </children>
+        </HBox>
+        <Separator />
+        <ListView fx:id="listaViajes" VBox.vgrow="ALWAYS" />
+    </children>
+</VBox>

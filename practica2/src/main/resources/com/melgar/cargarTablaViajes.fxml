@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.melgar.ViajesIniciadosController">
+    <TableView fx:id="tablaViajes" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columns>
+            <TableColumn fx:id="columnaNombre" text="Nombre del vehículo" />
+            <TableColumn fx:id="columnaDistancia" text="Distancia" />
+            <TableColumn fx:id="columnaCapacidad" text="Capacidad de gasolina" />
+        </columns>
+    </TableView>
+</AnchorPane>

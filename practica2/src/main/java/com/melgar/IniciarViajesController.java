@@ -103,7 +103,7 @@ public class IniciarViajesController {
         if (file.exists()) {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("estadoViajes.bin"))) {
                 List<EstadoViaje> estadosViajeLeidos = (List<EstadoViaje>) ois.readObject();
-            
+
                 for (EstadoViaje estadoViaje : estadosViajeLeidos) {
                     System.out.println("Nombre del vehículo: " + estadoViaje.getNombreVehiculo());
                     System.out.println("Distancia: " + estadoViaje.getDistancia());
@@ -126,20 +126,21 @@ public class IniciarViajesController {
             }
         }
     }
-    public void verViajesIniciados() {
-    try {
-        // Carga la nueva vista
-        Parent root = FXMLLoader.load(getClass().getResource("cargarTablaViajes.fxml"));
 
-        // Crea una nueva escena y la muestra en una nueva ventana
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
-    } catch (IOException e) {
-        e.printStackTrace();
+    public void verViajesIniciados() {
+        try {
+            // Carga la nueva vista
+            Parent root = FXMLLoader.load(getClass().getResource("cargarTablaViajes.fxml"));
+
+            // Crea una nueva escena y la muestra en una nueva ventana
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-}
 
     public IniciarViajesController() {
         // Inicializa tt en el constructor
@@ -380,59 +381,64 @@ public class IniciarViajesController {
                         iniciarViaje.setOnAction(event -> {
                             if (item != null) {
                                 vehiculoSeleccionado = mapaDeVehiculos.get(item.getNombreTransporte());
-                        
+
                                 if (vehiculoSeleccionado != null) {
                                     float distancia = item.getDistancia(); // La distancia entre los puntos
                                     float consumo = vehiculoSeleccionado.getConsumo();
-                        
+
                                     System.out.println("Distancia: " + distancia); // Imprime la distancia
                                     System.out.println("Consumo: " + consumo); // Imprime el consumo
-                        
+
                                     float duracion = vehiculoSeleccionado.getCapacidad() / consumo;
                                     duracion = Math.max(duracion, 1);
                                     tt = new TranslateTransition(Duration.seconds(duracion), imageView);
-                        
+                                    tt.setByX(distancia);
                                     // Añade la TranslateTransition a la lista
                                     todasLasTransiciones.add(tt);
-                        
+
                                     // Inicia la animación
                                     tt.play();
-                        
+
                                     // Crea un AtomicReference para la capacidad de gasolina del vehículo
-                                    AtomicReference<Float> capacidad = capacidades.computeIfAbsent(vehiculoSeleccionado.getNombre(), k -> new AtomicReference<>(vehiculoSeleccionado.getCapacidad()));
-                        
+                                    AtomicReference<Float> capacidad = capacidades.computeIfAbsent(
+                                            vehiculoSeleccionado.getNombre(),
+                                            k -> new AtomicReference<>(vehiculoSeleccionado.getCapacidad()));
+
                                     // Inicializa la distancia recorrida para este vehículo si no existe
                                     distanciasRecorridas.putIfAbsent(vehiculoSeleccionado.getNombre(), 0f);
-                        
-                                    Timeline timeline = createTimeline(capacidad, recargar, consumo, vehiculoSeleccionado.getNombre(), capacidadLabel, distanciaLabel);
+
+                                    Timeline timeline = createTimeline(capacidad, recargar, consumo,
+                                            vehiculoSeleccionado.getNombre(), capacidadLabel, distanciaLabel);
                                     timeline.setCycleCount(Animation.INDEFINITE);
                                     timeline.play();
-                        
+
                                     // Crea un nuevo objeto EstadoViaje
                                     EstadoViaje estadoViaje = new EstadoViaje();
                                     estadoViaje.setNombreVehiculo(vehiculoSeleccionado.getNombre());
-                        
+
                                     // Crea una lista para almacenar los objetos EstadoViaje
                                     List<EstadoViaje> estadosViaje = new ArrayList<>();
-                        
+
                                     tt.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
                                         double currentX = tt.getNode().getTranslateX();
                                         estadoViaje.setAnimacionX(currentX);
-                                    
+
                                         // Actualiza la distancia y la capacidad en estadoViaje
-                                        estadoViaje.setDistancia(distanciasRecorridas.get(vehiculoSeleccionado.getNombre()));
+                                        estadoViaje.setDistancia(
+                                                distanciasRecorridas.get(vehiculoSeleccionado.getNombre()));
                                         estadoViaje.setCapacidad(capacidad.get());
                                     });
-                                    
+
                                     tt.setOnFinished(e -> {
                                         estadoViaje.setAnimacionY(tt.getNode().getTranslateY());
                                         estadoViaje.setAnimacionDuracion(tt.getDuration());
-                                    
+
                                         // Agrega estadoViaje a la lista
                                         estadosViaje.add(estadoViaje);
-                                    
+
                                         // Escribe la lista de objetos EstadoViaje en el archivo
-                                        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("estadoViajes.bin"))) {
+                                        try (ObjectOutputStream oos = new ObjectOutputStream(
+                                                new FileOutputStream("estadoViajes.bin"))) {
                                             oos.writeObject(estadosViaje);
                                         } catch (IOException ex) {
                                             ex.printStackTrace();

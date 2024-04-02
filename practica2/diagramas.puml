@@ -1,0 +1,8 @@
+@startuml
+class Ruta {
+    +String inicio
+    +String fin
+    +float distancia
+    +Vehiculos vehiculos
+}
+@enduml

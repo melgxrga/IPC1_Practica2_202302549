@@ -83,19 +83,17 @@ private void handleCargarRutas(ActionEvent event) {
             while ((nextLine = reader.readNext()) != null) {
                 Rutas ruta = new Rutas(nextLine[0], nextLine[1], Float.parseFloat(nextLine[2]));
 
-                rutas.add(ruta); // Corregido aquí
+                rutas.add(ruta); 
 
-                RutasService.addRoute(ruta); // Asumiendo que quieres añadir 'ruta' a tu servicio
+                RutasService.addRoute(ruta);
 
-                tableView.getItems().add(ruta); // Asumiendo que quieres añadir 'ruta' a tu tableView
+                tableView.getItems().add(ruta);
             }
 
-            // Después de cargar los datos en la tabla, establece rutasCargadas a true
             EstadoGlobal estadoGlobal = EstadoGlobal.getInstance();
             estadoGlobal.setRutasCargadas(true);
 
         } catch (Exception e) {
-            // Considera manejar esta excepción
         }
     }
 }
@@ -105,8 +103,6 @@ private void handleCargarRutas(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/melgar/vistaEditarRuta.fxml"));
             Parent root = fxmlLoader.load();
-    
-            // Obtén la referencia al controlador
             editarRutaController controller = fxmlLoader.getController();
             controller.setCargaDeRutasController(this);
     

@@ -356,25 +356,20 @@ public class IniciarViajesController {
                         imagePane.getChildren().add(imageView);
 
                         Button recargar = new Button("Recargar");
-                        recargar.setVisible(false); // inicialmente el botón no es visible
+                        recargar.setVisible(false); 
 
                         recargar.setOnAction(event -> {
                             if (vehiculoSeleccionado != null) {
-                                // Restablece la capacidad de gasolina del vehículo
                                 AtomicReference<Float> capacidad = capacidades.get(vehiculoSeleccionado.getNombre());
                                 if (capacidad != null) {
                                     capacidad.set(vehiculoSeleccionado.getCapacidad());
-                                    capacidadLabel.setText("Capacidad de gasolina: " + capacidad.get()); // Actualiza el
-                                                                                                         // texto de la
-                                                                                                         // etiqueta
+                                    capacidadLabel.setText("Capacidad de gasolina: " + capacidad.get()); 
                                 }
 
-                                // Reanuda la animación si está pausada
                                 if (tt != null && tt.getStatus() == Animation.Status.PAUSED) {
                                     tt.play();
                                 }
 
-                                // Oculta el botón de recarga
                                 recargar.setVisible(false);
                             }
                         });
@@ -383,40 +378,27 @@ public class IniciarViajesController {
                                 vehiculoSeleccionado = mapaDeVehiculos.get(item.getNombreTransporte());
 
                                 if (vehiculoSeleccionado != null) {
-                                    float distancia = item.getDistancia(); // La distancia entre los puntos
+                                    float distancia = item.getDistancia();
                                     float consumo = vehiculoSeleccionado.getConsumo();
 
-                                    System.out.println("Distancia: " + distancia); // Imprime la distancia
-                                    System.out.println("Consumo: " + consumo); // Imprime el consumo
-
+                                    System.out.println("Distancia: " + distancia); 
+                                    System.out.println("Consumo: " + consumo); 
                                     float duracion = vehiculoSeleccionado.getCapacidad() / consumo;
                                     duracion = Math.max(duracion, 1);
                                     tt = new TranslateTransition(Duration.seconds(duracion), imageView);
-                                    tt.setByX(distancia);
-                                    // Añade la TranslateTransition a la lista
                                     todasLasTransiciones.add(tt);
-
-                                    // Inicia la animación
                                     tt.play();
 
-                                    // Crea un AtomicReference para la capacidad de gasolina del vehículo
                                     AtomicReference<Float> capacidad = capacidades.computeIfAbsent(
                                             vehiculoSeleccionado.getNombre(),
                                             k -> new AtomicReference<>(vehiculoSeleccionado.getCapacidad()));
-
-                                    // Inicializa la distancia recorrida para este vehículo si no existe
                                     distanciasRecorridas.putIfAbsent(vehiculoSeleccionado.getNombre(), 0f);
-
                                     Timeline timeline = createTimeline(capacidad, recargar, consumo,
                                             vehiculoSeleccionado.getNombre(), capacidadLabel, distanciaLabel);
                                     timeline.setCycleCount(Animation.INDEFINITE);
                                     timeline.play();
-
-                                    // Crea un nuevo objeto EstadoViaje
                                     EstadoViaje estadoViaje = new EstadoViaje();
                                     estadoViaje.setNombreVehiculo(vehiculoSeleccionado.getNombre());
-
-                                    // Crea una lista para almacenar los objetos EstadoViaje
                                     List<EstadoViaje> estadosViaje = new ArrayList<>();
 
                                     tt.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
@@ -435,8 +417,6 @@ public class IniciarViajesController {
 
                                         // Agrega estadoViaje a la lista
                                         estadosViaje.add(estadoViaje);
-
-                                        // Escribe la lista de objetos EstadoViaje en el archivo
                                         try (ObjectOutputStream oos = new ObjectOutputStream(
                                                 new FileOutputStream("estadoViajes.bin"))) {
                                             oos.writeObject(estadosViaje);
@@ -447,10 +427,7 @@ public class IniciarViajesController {
                                 }
                             }
                         });
-                        VBox celda = new VBox(iniciarViaje, detalles, separator, imagePane, recargar); // Añade
-                                                                                                       // imagePane en
-                                                                                                       // lugar de
-                                                                                                       // imageView
+                        VBox celda = new VBox(iniciarViaje, detalles, separator, imagePane, recargar); 
                         BorderPane borderPane = new BorderPane();
                         borderPane.setLeft(celda);
                         borderPane.setRight(fin);
